@@ -8,6 +8,7 @@ import LoginScreen from '../screens/LoginScreen';
 import RegistroScreen from '../screens/RegistroScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import GeneralScreen from '../screens/GeneralScreen';
+import RecursosScreen from '../screens/RecursosScreen';
 
 const Stack = createStackNavigator();
 
@@ -25,10 +26,10 @@ const Drawer = createDrawerNavigator();
 
 function MyDrawer() {
   return (
-    <Drawer.Navigator>
+    <Drawer.Navigator initialRouteName='Recursos'>
         <Drawer.Screen name="Welcome" component={WelcomeScreen} />
         <Drawer.Screen name="General" component={GeneralScreen} />
-        <Drawer.Screen name='Recursos' component={RegistroScreen}/>
+        <Drawer.Screen name='Recursos' component={RecursosScreen}/>
     </Drawer.Navigator>
   );
 }
@@ -36,7 +37,7 @@ function MyDrawer() {
 export default function MainNavigator(){
     return(
         <NavigationContainer>
-            <MyStack/>
+            <MyDrawer/>
         </NavigationContainer>
     )
 }
