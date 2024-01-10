@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, View, Image } from 'react-native'
+import { Button, StyleSheet, Text, View, Image, Alert } from 'react-native'
 import React, {useState} from 'react'
 
 /// IMAGE
@@ -8,9 +8,8 @@ import * as ImagePicker from 'expo-image-picker';
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { storage } from '../config/Config';
 
-/////
+///// RETIRA LOS LOGS
 import { LogBox } from "react-native"
-
 LogBox.ignoreAllLogs(true)
 
 
@@ -36,7 +35,7 @@ export default function RecursosScreen() {
   };
 
   //// SUBIR UNA IMAGEN A FIREBASE STORAGE
-  async function subirImagen(nombre) {
+  async function subirImagen(nombre: string) {
     const storageRef = ref(storage, 'usuarios/' + nombre);
 
     try {
@@ -48,6 +47,7 @@ export default function RecursosScreen() {
         });
 
         console.log('La imagen se subió con éxito');
+        Alert.alert('Mensaje', 'La imagen se subio con exito')
 
         // Obtiene la URL de la imagen
       //  const imageURL = await getDownloadURL(storageRef);
