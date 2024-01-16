@@ -26,9 +26,10 @@ export default function RegistroScreen( {navigation}: any ) {
         const user = userCredential.user;
 
         console.log("REGISTRO CORRECTO");
-        //navigation.navigate('Drawer_Welcome')
-        console.log(user.uid);
+        navigation.navigate('Drawer_Welcome')
+       // console.log(user.uid);
         setuserId(user.uid)
+        console.log(userId);
         
       })
       .catch((error) => {
@@ -42,7 +43,6 @@ export default function RegistroScreen( {navigation}: any ) {
         
       });
   }
-
   function guardar (userId:string, correo: string, nick: string, edad: string) {
     set(ref(db, 'users/' + userId), {
       nick: nick,
