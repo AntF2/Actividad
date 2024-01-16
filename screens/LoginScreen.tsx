@@ -19,7 +19,7 @@ export default function LoginScreen({ navigation }: any) {
         const user = userCredential.user;
         console.log(user);
 
-       navigation.navigate("Drawer_Welcome")
+        navigation.navigate("Drawer_Welcome")
       })
       .catch((error) => {
         const errorCode = error.code;
