@@ -1,25 +1,13 @@
-import { Button, StyleSheet, Text, View, Image, Alert } from 'react-native'
-import React, {useState} from 'react'
-
-/// IMAGE
+import { StyleSheet, Text, View, Button, ImageBackground, Image } from 'react-native'
+import React, { useState } from 'react'
 import * as ImagePicker from 'expo-image-picker';
-
-/// FIREBASE
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../config/Config';
 
-///// RETIRA LOS LOGS
-import { LogBox } from "react-native"
-LogBox.ignoreAllLogs(true)
-
-
 export default function RecursosScreen() {
+  const [imagen, setImagen] = useState('');
 
-  const [imagen, setImagen] = useState(' ')
-
-  ////// CARGAR UNA IMAGEN DESDE LA GALERIA
   const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -27,52 +15,68 @@ export default function RecursosScreen() {
       quality: 1,
     });
 
-    console.log(result);
-
-    if (!result.canceled) {
+    if (!result.cancelled) {
       setImagen(result.assets[0].uri);
     }
   };
 
-  //// SUBIR UNA IMAGEN A FIREBASE STORAGE
   async function subirImagen(nombre: string) {
     const storageRef = ref(storage, 'usuarios/' + nombre);
 
     try {
-        const response = await fetch(imagen);
-        const blob = await response.blob();
+      const response = await fetch(imagen);
+      const blob = await response.blob();
 
-        await uploadBytes(storageRef, blob, {
-            contentType: 'image/jpg'
-        });
+      await uploadBytes(storageRef, blob, {
+        contentType: 'image/jpg'
+      });
 
-        console.log('La imagen se subió con éxito');
-        Alert.alert('Mensaje', 'La imagen se subio con exito')
-
-        // Obtiene la URL de la imagen
-      //  const imageURL = await getDownloadURL(storageRef);
-        //console.log('URL de desacarga de la imagen', imageURL);
+      console.log('La imagen se subió con éxito');
     } catch (error) {
-        console.error(error);
+      console.error(error);
     }
-}
-
+  }
 
   return (
-    <View>
-      <Text>Subir imagen desde la galeria</Text>
-      <Button title='Seleccionar imagen' onPress={ () => pickImage() } />
-      <Image source={{ uri: imagen}} style={styles.img}/>
-
-      <Button title='cargar imagen' onPress={ ()=> subirImagen('avatar1')}/>
-    </View>
-  )
+    <ImageBackground
+      source={{ uri: 'https://i.pinimg.com/736x/ce/6e/39/ce6e392a57ba5ef7e2707a055ce1926b.jpg' }}
+      style={styles.backgroundImage}
+    >
+      <View style={styles.overlay}>
+        <Text style={styles.title}>Selecciona una imagen desde la galería</Text>
+        <Button title='Seleccionar imagen' onPress={pickImage} />
+        <Image source={{ uri: imagen }} style={styles.img} />
+        <Button title='Cargar imagen' onPress={() => subirImagen('avatar1')} color="green" />
+      </View>
+    </ImageBackground>
+  );
 }
 
 const styles = StyleSheet.create({
-  img:{
-    width:300,
-    height:300,
-    resizeMode: 'contain'
-  }
-})
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+  },
+  overlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fondo oscuro semi-transparente
+    padding: 20,
+    borderRadius: 10,
+    width: '80%',
+    alignItems: 'center',
+    alignSelf: 'center', // Alinea el contenedor al centro horizontalmente
+    justifyContent: 'center', // Alinea el contenedor al centro verticalmente
+  },
+  title: {
+    fontSize: 24,
+    marginBottom: 10,
+    color: 'white',
+  },
+  img: {
+    width: 300,
+    height: 300,
+    resizeMode: 'contain',
+    marginTop: 20,
+    marginBottom: 20,
+  },
+});
