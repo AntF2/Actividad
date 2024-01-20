@@ -49,8 +49,8 @@ export default function RegistroScreen({ navigation }: any) {
 
   return (
     <ImageBackground
-    source={{ uri: 'https://img2.wallspic.com/crops/7/3/4/7/6/167437/167437-ambiente-pendiente-material_propiedad-tintes_y_matices-patron-1536x3073.jpg' }}
-    style={styles.backgroundImage}
+      source={{ uri: 'https://img2.wallspic.com/crops/7/3/4/7/6/167437/167437-ambiente-pendiente-material_propiedad-tintes_y_matices-patron-1536x3073.jpg' }}
+      style={styles.backgroundImage}
     >
       <View style={styles.overlay}>
         <Text style={styles.title}>RegistroScreen</Text>

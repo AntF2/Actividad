@@ -59,6 +59,7 @@ export default function WelcomeScreen({ navigation }: any) {
       <View style={styles.overlay}>
         <Text style={styles.title}>¡Bienvenido!</Text>
 
+        {/* Aquí puedes agregar más elementos y estilos según sea necesario */}
         
         <Button title="Cerrar sesión" onPress={() => compuesta()} color="red" />
       </View>
